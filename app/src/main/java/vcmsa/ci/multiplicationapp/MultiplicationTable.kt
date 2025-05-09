@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import kotlinx.coroutines.DefaultExecutor.key
 
 class MultiplicationTable : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +22,7 @@ class MultiplicationTable : AppCompatActivity() {
             bundle?.getString ("tableNumber")
         val tableNumber =
             tableString!!.toInt()
-        val multiplicationTable = findViewById<TextView>(R.id.multiplicationTable)
+        val multiplicationTable = findViewById<TextView>(R.id.multiplicationResult)
 
         var tableDisplay = "$tableNumber x table\n\n"
     }

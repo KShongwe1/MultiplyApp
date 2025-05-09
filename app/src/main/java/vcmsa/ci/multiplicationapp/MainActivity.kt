@@ -1,35 +1,36 @@
 package vcmsa.ci.multiplicationapp
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity() {
-    private fun intent(packageContext: Any): Intent? {
-        TODO("Not yet implemented")
-    }
+class MultiplicationTable : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        val multiplyButton = findViewById<Button>(R.id.multiplyButton)
-        val tableNumberEditText = findViewById<EditText>(R.id.tableNumberEditText)
-        multiplyButton.setOnClickListener {
-            val intent = intent(this, MultiplicationTable::class.java)
-            intent.putExtra("tablenumber", tableNumberEditText.text.toString())
+        setContentView(R.layout.activity_multiplication_table)
 
-            startActivity(intent)
+        val header = findViewById<TextView>(R.id.multiplicationHeader)
+        val resultView = findViewById<TextView>(R.id.multiplicationResult)
+
+        val numberString = intent.getStringExtra("tablenumber")
+        val number = numberString?.toIntOrNull()
+
+        if (number != null) {
+            header.text = "Multiplication Table of $number"
+            val table = buildMultiplicationTable(number)
+            resultView.text = table
+        } else {
+            header.text = "Invalid number"
+            resultView.text = "Please enter a valid number in the previous screen."
         }
+    }
+
+    private fun buildMultiplicationTable(number: Int): String {
+        val sb = StringBuilder()
+        for (i in 1..10) {
+            sb.append("$number x $i = ${number * i}\n")
+        }
+        return sb.toString()
     }
 }
